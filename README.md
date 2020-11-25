@@ -1,3 +1,10 @@
+# Counter and Boiling Verdict
+This is just a test project for inital React practice.
+To view the Counter project working you need to change the name of the App(1).js to App.js and viceversa
+
+[Link to Repo](https://github.com/NewIncome/counter-and-boilingVerdict)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
