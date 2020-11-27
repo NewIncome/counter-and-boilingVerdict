@@ -19,24 +19,53 @@ function tryConvert(temperature, convert) {
     return '';
   }
   const output = convert(input);
-  const rounded = MAth.round
+  const rounded = Math.round(output * 1000) / 1000;
+  return rounded.toString();
 }
 
-class BoilingVerdict(props) {
+function BoilingVerdict(props) {
   if (props.celcius >= 100) {
     return <p>The water would boil.</p>
   }
   return <p>The water would not boil.</p>
 }
 
-class Calculator extends React.Component {
+export default class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {temperature: '', scale: 'c'};
+    this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
+    this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
+  }
+
+  handleCelsiusChange(temperature) {
+    this.setState({scale: 'c', temperature})
+  }
+
+  handleFahrenheitChange(temperature) {
+    this.setState({scale: 'f', temperature})
+  }
+
   render() {
+    const scale = this.state.scale;
     const temperature = this.state.temperature;
+    const celsius = scale === 'f' ? tryConvert(temperature,
+      toCelsius) : temperature;
+    const fahrenheit = scale === 'c' ? tryConvert(temperature,
+      toFahrenheit) : temperature;
 
     return (
       <div>
-        <Temperature scale="c" />
-        <Temperature scale="f" />
+        <Temperature
+          scale="c"
+          temperature={celsius}
+          onTemperatureChange={this.handleCelsiusChange}/>
+        <Temperature
+          scale="f"
+          temperature={fahrenheit}
+          onTemperatureChange={this.handleFahrenheitChange}/>
+
+        <BoilingVerdict celsius={parseFloat(celsius)} />
       </div>
     );
   }
@@ -45,16 +74,16 @@ class Calculator extends React.Component {
 class TemperatureInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {temperature: ''}
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e) {
-    this.setState({temperature: e.target.value});
+    // Before: this.setState({temperature: e.target.value});
+    this.props.onTemperatureChange(e.target.value);
   }
 
   render() {
-    const temperature = this.state.temperature;
+    const temperature = this.props.temperature;
     const scale = this.props.scale;
 
     return (

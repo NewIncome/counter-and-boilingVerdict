@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import BoilingVerdict from './boilingVerdict'
+import Calculator from './boilingVerdict'
 
 class App extends React.Component {
   constructor (props) {
@@ -9,11 +9,9 @@ class App extends React.Component {
 
   render() {
     return <div>
-      <BoilingVerdict />
+      <Calculator />
     </div>
   }
 }
-
-ReactDOM.render(<App />, document.getElementById('root'))
 
 export default App
